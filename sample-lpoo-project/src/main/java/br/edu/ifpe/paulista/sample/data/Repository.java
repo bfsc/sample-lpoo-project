@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import br.edu.ifpe.paulista.model.User;
 
-public class Repository {
+public class Repository implements IRepository {
 
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
