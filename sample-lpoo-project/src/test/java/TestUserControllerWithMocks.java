@@ -11,7 +11,7 @@ import br.edu.ifpe.paulista.sample.business.UserController;
 import br.edu.ifpe.paulista.sample.data.Repository;
 
 @ExtendWith(MockitoExtension.class)
-public class TestUserControllerComMocks {
+public class TestUserControllerWithMocks {
 
 	// TODO FAZER TESTE DE INDISPONIBILIDADE NO BD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	
