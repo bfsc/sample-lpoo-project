@@ -1,24 +1,26 @@
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.edu.ifpe.paulista.model.User;
 import br.edu.ifpe.paulista.sample.business.BusinessException;
 import br.edu.ifpe.paulista.sample.business.UserController;
+import br.edu.ifpe.paulista.sample.data.Repository;
 
-public class TestUserControllerBKP {
+@ExtendWith(MockitoExtension.class)
+public class TestUserControllerComMocks {
 
+	// TODO FAZER TESTE DE INDISPONIBILIDADE NO BD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	
 	@Test
-	public void testCreateUserSuccess() {
+	public void testCreateUserSuccess(@Mock Repository repositoryMock) {
 		UserController controller = new UserController();
-
-		controller.createUser("test", "12345678", "12345678");
-
-		User user = controller.searchUserByLogin("test");
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals("test", user.getLogin());
-		Assertions.assertEquals("12345678", user.getPassword());
+		controller.setRepository(repositoryMock);
 		
-		controller.deleteUser("test");
+		controller.createUser("test", "12345678", "12345678");
 	}
 	
 	@Test
@@ -57,15 +59,15 @@ public class TestUserControllerBKP {
 	}
 	
 	@Test
-	public void testCreateUserFailExistentUser() {
-		UserController controller = new UserController();
+	public void testCreateUserFailExistentUser(@Mock Repository repositoryMock) {
+		when(repositoryMock.hasUser("test")).thenReturn(true);
 		
-		controller.createUser("test", "12345678", "12345678");
+		UserController controller = new UserController();
+		controller.setRepository(repositoryMock);
 		
 		Assertions.assertThrows(BusinessException.class, 
 				() -> {controller.createUser("test", "12345678", "12345678");});
 		
-		controller.deleteUser("test");		
 	}
 	
 }
