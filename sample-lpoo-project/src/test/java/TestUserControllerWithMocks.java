@@ -13,12 +13,12 @@ import br.edu.ifpe.paulista.sample.data.Repository;
 @ExtendWith(MockitoExtension.class)
 public class TestUserControllerWithMocks {
 
-	// TODO FAZER TESTE DE INDISPONIBILIDADE NO BD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	
 	@Test
 	public void testCreateUserSuccess(@Mock Repository repositoryMock) {
 		UserController controller = new UserController();
 		controller.setRepository(repositoryMock);
+		
+		when(repositoryMock.hasUser("test")).thenReturn(false);
 		
 		controller.createUser("test", "12345678", "12345678");
 	}
